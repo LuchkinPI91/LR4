@@ -6,8 +6,11 @@
 #include <malloc.h>
 #include <string>
 #include <algorithm>
+#include <iostream>
 #define M 20
 #define N 30
+
+using namespace std;
 size_t remove_ch(char* s, char ch)           //функция удаление определенных символов
 {
 	size_t i, j;
@@ -61,18 +64,15 @@ public:
 		
 	}
 
-	void sort1(int n) {
-	
-		student_book.sort1(n);
-	
-	}
-	
+
 	
 	void sort(int n) {
 		char ln[M];
 		int* g = new int();
 		float* a1 = new float();
 		float* a2 = new float();
+		int* ID = new int();
+		int* ID1 = new int();
 		for (int i = 0;i < n - 1;i++) {
 			for (int j = n - 1;j > i;j--)
 				if (group[j - 1] < group[j]) {
@@ -98,6 +98,10 @@ public:
 
 					
 
+					*ID = student_book.get_id(j - 1);
+					*ID1 = student_book.get_id(j);
+					student_book.setId(j - 1, *ID1);
+					student_book.setId(j, *ID);
 
 				}
 
@@ -107,6 +111,8 @@ public:
 		delete g;
 		delete a1;
 		delete a2;
+		delete ID;
+		delete ID1;
 
 	}
 
@@ -115,7 +121,7 @@ public:
 		for (int i = 0;i < n;i++) {
 			if (avg_ball2[i] < avg_ball1[i]) {
 
-				printf("%s\n", last_name[i]);
+				std::cout << "Студент:" << last_name[i]<<std::endl;
 
 			}
 
@@ -172,22 +178,9 @@ private:
 
 		}
 
-		void sort1(int n) {
-			int* ID = new int();
-			for (int i = 0;i < n - 1;i++) {
-				for (int j = n - 1;j > i;j--) {
-					students st;
-					if (st.group[j-1]<st.group[j]) {
-					
-						*ID = id[j - 1];
-						id[j - 1] = id[j];
-						id[j] = *ID;
+		void setId(int i, int id) {
 
-					}
-				
-				}
-			}
-			delete ID;
+			this->id[i] = id;
 		}
 		
 	};
@@ -240,7 +233,6 @@ int _tmain() {
 	printf("До сортировки:\n");
 	student->output(n);
 	student->sort(n);
-	student->sort1(n);
 	printf("После сортировки:\n");
 	student->output(n);
 	student->zadanie(n);
